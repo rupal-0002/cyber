@@ -28,6 +28,8 @@ public class MainApp {
         JPanel loginPanel = LoginPage.createPanel(role -> {
             if ("Admin".equals(role)) {
                 cardLayout.show(cardPanel, "AdminDashboard");
+            } else if ("Officer".equals(role)) {
+                cardLayout.show(cardPanel, "OfficerDashboard");
             } else {
                 cardLayout.show(cardPanel, "Dashboard");
             }
@@ -35,12 +37,14 @@ public class MainApp {
         JPanel dashboardPanel = DashboardPage.createPanel(() -> cardLayout.show(cardPanel, "ReportCrime"));
         JPanel reportPanel = ReportCrimePage.createPanel(() -> cardLayout.show(cardPanel, "Dashboard"));
         JPanel adminPanel = AdminDashboardPage.createPanel();
+        JPanel officerPanel = OfficerDashboardPage.createPanel(() -> cardLayout.show(cardPanel, "Login"));
 
         cardPanel.add(splashPanel, "Splash");
         cardPanel.add(loginPanel, "Login");
         cardPanel.add(dashboardPanel, "Dashboard");
         cardPanel.add(reportPanel, "ReportCrime");
         cardPanel.add(adminPanel, "AdminDashboard");
+        cardPanel.add(officerPanel, "OfficerDashboard");
 
         frame.add(cardPanel);
         frame.setVisible(true);

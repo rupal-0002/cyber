@@ -105,7 +105,7 @@ public class LoginPage {
 
         // Login As Dropdown
         addLabelToPanel(cardPanel, "Login as");
-        String[] roles = {"-- Select Role --", "Admin", "User"};
+        String[] roles = {"-- Select Role --", "Admin", "Officer", "Citizen"};
         JComboBox<String> roleCombo = new JComboBox<>(roles);
         roleCombo.setBackground(Color.WHITE);
         roleCombo.setBorder(BorderFactory.createCompoundBorder(
@@ -126,7 +126,16 @@ public class LoginPage {
         loginBtn.setMaximumSize(new Dimension(290, 45));
         loginBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginBtn.setBorder(new LineBorder(new Color(60, 100, 230), 1, true));
-        loginBtn.addActionListener(e -> { if(onLogin != null) onLogin.accept((String) roleCombo.getSelectedItem()); });
+        loginBtn.addActionListener(e -> {
+            String selected = (String) roleCombo.getSelectedItem();
+            if (selected != null && !selected.startsWith("--")) {
+                if (onLogin != null) {
+                    onLogin.accept(selected);
+                }
+            } else {
+                JOptionPane.showMessageDialog(cardPanel, "Please select a role to login.", "Role Required", JOptionPane.WARNING_MESSAGE);
+            }
+        });
         cardPanel.add(loginBtn);
         cardPanel.add(Box.createRigidArea(new Dimension(0, 20)));
 
@@ -163,6 +172,7 @@ public class LoginPage {
         guestBtn.setMaximumSize(new Dimension(290, 40));
         guestBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         guestBtn.setBorder(new LineBorder(new Color(200, 200, 200), 1, true));
+        guestBtn.addActionListener(e -> { if(onLogin != null) onLogin.accept("Citizen"); });
         cardPanel.add(guestBtn);
 
         mainPanel.add(cardPanel);
